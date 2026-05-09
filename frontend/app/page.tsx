@@ -228,29 +228,7 @@ export default function Home() {
             </div>
             <span className="rounded-md bg-moss px-3 py-1 text-sm font-medium text-white">{briefs.length} briefs ready</span>
           </div>
-          {generationStep !== null ? (
-            <div className="flex h-64 flex-col items-center justify-center rounded-lg border border-line bg-white shadow-inner">
-              <Loader2 className="mb-4 h-10 w-10 animate-spin text-coral" />
-              <div className="flex flex-col items-center gap-2">
-                {steps.map((step, index) => (
-                  <p
-                    key={step}
-                    className={`text-sm font-medium transition-all duration-500 ${
-                      index === generationStep
-                        ? "text-ink scale-110"
-                        : index < generationStep
-                        ? "text-moss"
-                        : "text-neutral-300"
-                    }`}
-                  >
-                    {step} {index < generationStep && "✓"}
-                  </p>
-                ))}
-              </div>
-            </div>
-          ) : (
-            <BriefCardGrid briefs={briefs} onSelect={setSelectedBrief} />
-          )}
+          <BriefCardGrid briefs={briefs} onSelect={setSelectedBrief} />
         </section>
 
         <section className="mt-6">
@@ -270,6 +248,43 @@ export default function Home() {
         onClose={() => setSelectedBrief(null)}
         onStatusChange={handleStatusChange}
       />
+
+      {/* Full-screen Generation Modal */}
+      {generationStep !== null && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/50 backdrop-blur-md">
+          <div className="flex w-full max-w-md flex-col items-center justify-center rounded-2xl bg-white p-10 shadow-2xl">
+            <Loader2 className="mb-8 h-12 w-12 animate-spin text-coral" />
+            <div className="flex w-full flex-col gap-4">
+              {steps.map((step, index) => {
+                const isActive = index === generationStep;
+                const isPast = index < generationStep;
+                return (
+                  <div key={step} className="flex items-center gap-4">
+                    <div
+                      className={`grid h-8 w-8 shrink-0 place-items-center rounded-full text-sm font-bold transition-colors duration-500 ${
+                        isActive
+                          ? "bg-coral text-white"
+                          : isPast
+                          ? "bg-moss text-white"
+                          : "bg-paper text-neutral-400"
+                      }`}
+                    >
+                      {isPast ? "✓" : index + 1}
+                    </div>
+                    <p
+                      className={`text-base font-medium transition-all duration-500 ${
+                        isActive ? "text-ink scale-105" : isPast ? "text-neutral-600" : "text-neutral-400"
+                      }`}
+                    >
+                      {step}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
