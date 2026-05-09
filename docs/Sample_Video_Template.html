@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sample Reel Output</title>
+  <style>
+    :root {
+      --primary: #ff4757;
+      --bg: #111;
+      --text: #fff;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    /* 9:16 Aspect Ratio Container */
+    .phone-container {
+      width: 360px;
+      height: 640px;
+      background-color: var(--bg);
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      border: 4px solid #333;
+    }
+    .video-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      animation: bgShift 10s infinite alternate;
+    }
+    @keyframes bgShift {
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(30deg); }
+    }
+    .visual-prompt {
+      position: absolute;
+      top: 40%;
+      text-align: center;
+      padding: 0 20px;
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 1px;
+    }
+    /* Animated Captions Layer */
+    .caption-container {
+      position: absolute;
+      bottom: 120px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      padding: 0 20px;
+      box-sizing: border-box;
+      z-index: 10;
+    }
+    .caption-text {
+      font-size: 24px;
+      font-weight: 800;
+      color: #fff;
+      text-transform: uppercase;
+      text-shadow: 2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(10px) scale(0.95);
+      animation: popIn 3s infinite;
+    }
+    .caption-highlight {
+      color: #ffeb3b;
+    }
+    @keyframes popIn {
+      0% { opacity: 0; transform: translateY(10px) scale(0.95); }
+      10% { opacity: 1; transform: translateY(0) scale(1.05); }
+      15% { transform: translateY(0) scale(1); }
+      80% { opacity: 1; transform: translateY(0) scale(1); }
+      90% { opacity: 0; transform: translateY(-10px) scale(0.95); }
+      100% { opacity: 0; }
+    }
+    /* UI Overlay Layer */
+    .ui-overlay {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 20;
+    }
+    .channel-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background-color: var(--primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      color: white;
+      font-size: 14px;
+    }
+    .channel-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: white;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+    }
+    .description {
+      font-size: 13px;
+      color: #eee;
+      line-height: 1.4;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .hashtags {
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+    }
+    /* Side actions */
+    .actions {
+      position: absolute;
+      bottom: 80px;
+      right: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      z-index: 20;
+      align-items: center;
+    }
+    .action-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      color: white;
+      font-size: 18px;
+    }
+    .action-label {
+      font-size: 11px;
+      margin-top: 4px;
+      font-weight: 500;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+      color: white;
+    }
+    /* Playback bar */
+    .progress-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      background: rgba(255,255,255,0.3);
+      width: 100%;
+      z-index: 30;
+    }
+    .progress-fill {
+      height: 100%;
+      background: white;
+      width: 0%;
+      animation: progress 3s linear infinite;
+    }
+    @keyframes progress {
+      0% { width: 0%; }
+      100% { width: 100%; }
+    }
+    .top-pill {
+      position: absolute;
+      top: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(4px);
+      padding: 6px 16px;
+      border-radius: 20px;
+      color: white;
+      font-size: 12px;
+      font-weight: 600;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .recording-dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--primary);
+      border-radius: 50%;
+      animation: pulse 1s infinite alternate;
+    }
+    @keyframes pulse {
+      from { opacity: 0.5; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="phone-container">
+  <!-- Visual Background representing video/image generation -->
+  <div class="video-layer">
+    <div class="visual-prompt">[Visual: Split-screen showing myth vs fact on a dinner plate]</div>
+  </div>
+
+  <div class="top-pill">
+    <div class="recording-dot"></div>
+    AI Generated Output
+  </div>
+
+  <!-- Animated Captions -->
+  <div class="caption-container">
+    <div class="caption-text">
+      Eating carbs after 6 PM makes you <span class="caption-highlight">FAT?</span>
+    </div>
+  </div>
+
+  <!-- Right side actions -->
+  <div class="actions">
+    <div style="display: flex; flex-direction: column; align-items: center;">
+      <div class="action-icon">🤍</div>
+      <div class="action-label">24.5K</div>
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center;">
+      <div class="action-icon">💬</div>
+      <div class="action-label">128</div>
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center;">
+      <div class="action-icon">🔖</div>
+      <div class="action-label">1.2K</div>
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center;">
+      <div class="action-icon">↗️</div>
+      <div class="action-label">Share</div>
+    </div>
+  </div>
+
+  <!-- Bottom Details -->
+  <div class="ui-overlay">
+    <div class="channel-info">
+      <div class="avatar">AF</div>
+      <div class="channel-name">@AI_Fitness_Myths</div>
+    </div>
+    <div class="description">
+      Carbs at night are not the villain. Your total system matters. Save this before planning your next cut.
+    </div>
+    <div class="hashtags">
+      #fitnessmyths #fatloss #nutritionfacts
+    </div>
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="progress-bar">
+    <div class="progress-fill"></div>
+  </div>
+</div>
+
+<script>
+  // Simple script to cycle through captions to simulate a generated reel script
+  const captions = [
+    'Eating carbs after 6 PM makes you <span class="caption-highlight">FAT?</span>',
+    'That\'s a myth costing you <span class="caption-highlight">RESULTS</span>',
+    'And making dinner <span class="caption-highlight">MISERABLE</span>',
+    'Focus on your <span class="caption-highlight">TOTAL CALORIE</span> balance',
+  ];
+  
+  let currentIndex = 0;
+  const captionEl = document.querySelector('.caption-text');
+  
+  // Change caption every 3 seconds to match animation
+  setInterval(() => {
+    currentIndex = (currentIndex + 1) % captions.length;
+    // Reset animation
+    captionEl.style.animation = 'none';
+    captionEl.offsetHeight; // trigger reflow
+    captionEl.innerHTML = captions[currentIndex];
+    captionEl.style.animation = 'popIn 3s infinite';
+  }, 3000);
+</script>
+
+</body>
+</html>
