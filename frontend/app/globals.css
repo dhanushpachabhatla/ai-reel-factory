@@ -2,28 +2,62 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  color-scheme: light;
+@layer base {
+  :root {
+    --bg-base: 247 246 242; /* #f7f6f2 - paper */
+    --bg-elevated: 255 255 255; /* white */
+    --ink: 21 21 21; /* #151515 */
+    --text-muted: 115 115 115; /* neutral-500 */
+    --line: 222 219 210; /* #dedbd2 */
+    --moss: 88 118 75; /* #58764b */
+    --coral: 217 103 79; /* #d9674f */
+    --cobalt: 49 95 157; /* #315f9d */
+    --amber: 197 139 43; /* #c58b2b */
+    --glass: 255 255 255;
+    --glass-opacity: 0.7;
+    --border-opacity: 0.1;
+  }
+
+  .dark {
+    --bg-base: 10 10 10; /* very dark gray */
+    --bg-elevated: 24 24 27; /* dark zinc */
+    --ink: 250 250 250; /* very light gray */
+    --text-muted: 161 161 170; /* zinc 400 */
+    --line: 39 39 42; /* zinc 800 */
+    --moss: 100 180 80; /* lighter green */
+    --coral: 252 100 100; /* lighter coral */
+    --cobalt: 100 150 253; /* lighter blue */
+    --amber: 253 200 100; /* lighter amber */
+    --glass: 24 24 27;
+    --glass-opacity: 0.6;
+    --border-opacity: 0.2;
+  }
 }
 
-* {
-  box-sizing: border-box;
+@layer base {
+  * {
+    @apply border-line;
+  }
+  body {
+    @apply bg-base text-ink antialiased selection:bg-cobalt selection:text-white transition-colors duration-300;
+  }
 }
 
-body {
-  margin: 0;
-  background: #f7f6f2;
-  color: #151515;
-}
-
-button,
-input,
-select,
-textarea {
-  font: inherit;
-}
-
-::selection {
-  background: #315f9d;
-  color: white;
+/* Custom Utilities for Glassmorphism & Aesthetics */
+@layer utilities {
+  .glass {
+    @apply bg-[rgb(var(--glass)/var(--glass-opacity))] backdrop-blur-md border border-[rgb(var(--ink)/var(--border-opacity))];
+  }
+  .shadow-soft {
+    box-shadow: 0 18px 55px rgba(0, 0, 0, 0.08);
+  }
+  .dark .shadow-soft {
+    box-shadow: 0 18px 55px rgba(0, 0, 0, 0.4);
+  }
+  .gradient-primary {
+    @apply bg-gradient-to-r from-cobalt to-indigo-600 dark:from-cobalt dark:to-indigo-500 text-white shadow-md hover:shadow-lg transition-all hover:-translate-y-0.5;
+  }
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-soft hover:-translate-y-1 hover:border-[rgb(var(--ink)/0.2)] dark:hover:border-[rgb(var(--ink)/0.4)];
+  }
 }

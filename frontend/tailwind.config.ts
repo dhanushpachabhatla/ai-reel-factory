@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  darkMode: ["class"],
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -9,16 +10,30 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: "#151515",
-        paper: "#f7f6f2",
-        line: "#dedbd2",
-        moss: "#58764b",
-        coral: "#d9674f",
-        cobalt: "#315f9d",
-        amber: "#c58b2b"
+        base: "rgb(var(--bg-base) / <alpha-value>)",
+        paper: "rgb(var(--bg-elevated) / <alpha-value>)",
+        elevated: "rgb(var(--bg-elevated) / <alpha-value>)",
+        ink: "rgb(var(--ink) / <alpha-value>)",
+        muted: "rgb(var(--text-muted) / <alpha-value>)",
+        line: "rgb(var(--line) / <alpha-value>)",
+        moss: "rgb(var(--moss) / <alpha-value>)",
+        coral: "rgb(var(--coral) / <alpha-value>)",
+        cobalt: "rgb(var(--cobalt) / <alpha-value>)",
+        amber: "rgb(var(--amber) / <alpha-value>)"
       },
-      boxShadow: {
-        soft: "0 18px 55px rgba(21, 21, 21, 0.08)"
+      animation: {
+        "fade-in": "fadeIn 0.5s ease-out forwards",
+        "slide-up": "slideUp 0.5s ease-out forwards",
+      },
+      keyframes: {
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        slideUp: {
+          "0%": { opacity: "0", transform: "translateY(10px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        }
       }
     }
   },
