@@ -9,6 +9,9 @@ The app is intentionally split into two parts:
 
 This mirrors a scalable production setup where the UI manages review and workflow, while Python owns AI generation, scoring, RAG-ready services, and automation logic.
 
+## Demo Video Link - https://drive.google.com/file/d/1VfIjf4MkpRBUdI2uLk_oQhVVKrBDWFJb/view?usp=sharing
+
+
 ## File Structure
 
 ```text
