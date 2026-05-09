@@ -75,6 +75,7 @@ GEMINI_API_KEY1=your_first_key
 GEMINI_API_KEY2=your_second_key
 GEMINI_API_KEY3=your_third_key
 GEMINI_MODEL=gemini-2.5-flash
+ALLOWED_ORIGINS=http://localhost:3000,http://localhost:3001,http://localhost:3002
 ```
 
 ## Run Frontend
@@ -106,14 +107,17 @@ POST /analytics/recommendations
 ## What It Demonstrates
 
 - Multi-channel playbooks
-- 1-click batch generation
+- 1-click batch generation with Multi-Step "AI Thinking" Progress UI
 - Python AI backend with Gemini integration
 - Gemini key rotation with `GEMINI_API_KEY1`, `GEMINI_API_KEY2`, and `GEMINI_API_KEY3`
 - Mock fallback when no API key is present
 - Production-ready brief details: script, voiceover, storyboard, prompts, captions, hashtags, CTA, and editing notes
+- **Operator Approval Workflow**: Review, Approve, or Reject & Regenerate briefs using actual Gemini API
+- **In-App Video Preview**: A simulated 9:16 mobile player showing the script with animated kinetic captions
 - Editable analytics scoring and Gemini-powered feedback loop
 - CSV export for scheduler handoff
 - Architecture ready for RAG, background jobs, media generation, and database persistence
+- **Premium UI Overhaul**: Seamless Light/Dark mode, glassmorphism, gradient UI, and smooth micro-animations
 
 ## Assignment Report
 
